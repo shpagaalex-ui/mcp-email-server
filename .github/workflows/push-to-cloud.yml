@@ -1,0 +1,29 @@
+name: Build and push mail MCP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Cloud.ru registry
+        uses: docker/login-action@v3
+        with:
+          registry: mail-mcp.cr.cloud.ru
+          username: ${{ secrets.CLOUDRU_KEY_ID }}
+          password: ${{ secrets.CLOUDRU_KEY_PASSWORD }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: mail-mcp.cr.cloud.ru/mcp-email-server:latest
