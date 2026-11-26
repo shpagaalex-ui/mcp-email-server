@@ -5,3 +5,4 @@
 !uv.lock
 !mcp_email_server/
 !mcp_email_server/**
+!mail-auth-proxy.js
